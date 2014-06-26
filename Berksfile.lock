@@ -1,0 +1,15 @@
+DEPENDENCIES
+  ambari
+    git: https://github.com/he9lin/ambari-cookbook.git
+    revision: 597c61164f6452cda7082d3c7cb861fbce766b92
+  ohai
+    git: https://github.com/heyook/ohai-cookbook.git
+    revision: a893f520dd8629a52c0eed20ba431ebb1f8d3df7
+
+GRAPH
+  ambari (0.1.0)
+    hostsfile (= 2.4.5)
+    yum (= 2.4.4)
+  hostsfile (2.4.5)
+  ohai (2.0.0)
+  yum (2.4.4)
