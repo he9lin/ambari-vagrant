@@ -27,6 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.validation_key_path = CHEF_CLIENT_KEY
 
       chef.add_role('ambari_server')
+      chef.add_role('ambari_agent')
     end
   end
 
