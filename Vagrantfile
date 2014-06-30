@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :do6501 do |node|
-    node.vm.host_name = "do6501.ambari-server.heyook"
+    node.vm.host_name = "do6501.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -43,7 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :do6502 do |node|
-    node.vm.host_name = "do6502.ambari-agent.heyook"
+    node.vm.host_name = "do6502.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :do6503 do |node|
-    node.vm.host_name = "do6503.ambari-agent.heyook"
+    node.vm.host_name = "do6503.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
