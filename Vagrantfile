@@ -13,14 +13,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "centos65"
   config.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box"
-  config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", "2048"]
+
+  # config.vm.provider "virtualbox" do |v|
+  #   v.customize ["modifyvm", :id, "--memory", "2048"]
+  # end
+
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+    provider.client_id = ENV['DIGITAL_OCEAN_CLIENT_ID']
+    provider.api_key   = ENV['DIGITAL_OCEAN_API_KEY']
+    provider.image     = "CentOS 6.5 x64"
+    provider.region    = "San Francisco 1"
+    provider.size      = "16GB"
   end
 
-  config.vm.define :c6501 do |node|
-    node.vm.host_name = "c6501.ambari-server.heyook"
-    node.vm.network :private_network, ip: "192.168.65.101"
-    node.vm.network :forwarded_port, guest: 8080, host: 8080 # Ambari server
+  config.vm.define :do6501 do |node|
+    node.vm.host_name = "do6501.ambari-server.heyook"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -31,9 +42,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define :c6502 do |node|
-    node.vm.host_name = "c6502.ambari-agent.heyook"
-    node.vm.network :private_network, ip: "192.168.65.102"
+  config.vm.define :do6502 do |node|
+    node.vm.host_name = "do6502.ambari-agent.heyook"
+    node.vm.provision :chef_client do |chef|
+      chef.chef_server_url = CHEF_CLIENT_URL
+      chef.validation_client_name = CHEF_CLIENT_NAME
+      chef.validation_key_path = CHEF_CLIENT_KEY
+
+      chef.add_role('ambari_agent')
+    end
+  end
+
+  config.vm.define :do6503 do |node|
+    node.vm.host_name = "do6503.ambari-agent.heyook"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -51,7 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 80, host: 808k
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
