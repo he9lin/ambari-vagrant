@@ -23,15 +23,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.vm.box = 'digital_ocean'
     override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-    provider.client_id = ENV['DIGITAL_OCEAN_CLIENT_ID']
-    provider.api_key   = ENV['DIGITAL_OCEAN_API_KEY']
-    provider.image     = "CentOS 6.5 x64"
-    provider.region    = "San Francisco 1"
-    provider.size      = "16GB"
+    provider.client_id    = ENV['DIGITAL_OCEAN_CLIENT_ID']
+    provider.api_key      = ENV['DIGITAL_OCEAN_API_KEY']
+    provider.ssh_key_name = ENV['DIGITAL_OCEAN_SSH_KEY']
+    provider.image        = "CentOS 6.5 x64"
+    provider.region       = "San Francisco 1"
+    provider.size         = "16GB"
   end
 
   config.vm.define :do6501 do |node|
-    node.vm.host_name = "do6501.ambari.heyooklabs.com"
+    node.vm.hostname = "do6501.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -43,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :do6502 do |node|
-    node.vm.host_name = "do6502.ambari.heyooklabs.com"
+    node.vm.hostname = "do6502.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
@@ -54,7 +55,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :do6503 do |node|
-    node.vm.host_name = "do6503.ambari.heyooklabs.com"
+    node.vm.hostname = "do6503.ambari.heyooklabs.com"
+    node.vm.provision :chef_client do |chef|
+      chef.chef_server_url = CHEF_CLIENT_URL
+      chef.validation_client_name = CHEF_CLIENT_NAME
+      chef.validation_key_path = CHEF_CLIENT_KEY
+
+      chef.add_role('ambari_agent')
+    end
+  end
+
+  config.vm.define :do6504 do |node|
+    node.vm.hostname = "do6504.ambari.heyooklabs.com"
+    node.vm.provision :chef_client do |chef|
+      chef.chef_server_url = CHEF_CLIENT_URL
+      chef.validation_client_name = CHEF_CLIENT_NAME
+      chef.validation_key_path = CHEF_CLIENT_KEY
+
+      chef.add_role('ambari_agent')
+    end
+  end
+
+  config.vm.define :do6505 do |node|
+    node.vm.hostname = "do6505.ambari.heyooklabs.com"
     node.vm.provision :chef_client do |chef|
       chef.chef_server_url = CHEF_CLIENT_URL
       chef.validation_client_name = CHEF_CLIENT_NAME
