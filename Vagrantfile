@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.image              = "CentOS 6.5 x64"
     provider.region             = "New York 2"
     provider.size               = "8GB"
-    provider.private_networking = true
+    # provider.private_networking = true
   end
 
   config.vm.define :do6501 do |node|
