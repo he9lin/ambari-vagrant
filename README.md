@@ -22,3 +22,8 @@ Cookbooks: `ohai` and `ambari`. See `Berksfile` for details
 ## Spin up servers
 
 Currently supports digital ocean
+
+## TODO
+
+A client machine to run jobs?
+Faster cookbooks upload to hosts
