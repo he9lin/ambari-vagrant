@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.api_key            = ENV['DIGITAL_OCEAN_API_KEY']
     provider.ssh_key_name       = ENV['DIGITAL_OCEAN_SSH_KEY']
     provider.image              = "CentOS 6.5 x64"
-    provider.region             = "New York 2"
+    provider.region             = "San Francisco 1"
     provider.size               = "8GB"
     # provider.private_networking = true
   end
